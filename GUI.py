@@ -13,29 +13,19 @@ def centerWindow():
     x = (root.winfo_screenwidth() - root.winfo_reqwidth()) / 2
     y = (root.winfo_screenheight() - root.winfo_reqheight()) / 2
     root.geometry("+%d+%d" % (x, y))                         #takes in variables for centering
+
 def dbConfig():
     #make new window, allow for flushing db
     windowDB = tk.Toplevel(root)
-    flushdbButton = Button(windowDB, text="flush database")
-    secondButton = Button(windowDB, text=" do something else") #add ,command = DB.flush()
+    flushdbButton = Button(windowDB, text="flush database",command = flush())
+    secondButton = Button(windowDB, text=" do something else",command = printdb()) #add ,command = DB.flush()
     flushdbButton.pack()
     secondButton.pack()
 
-def loginButton():
-    windowLog = tk.Toplevel(root)
-    usernameEntry = Entry(windowLog)
-    usernameLabel = Label(windowLog, text= "Username:")
-    passwordEntry = Entry(windowLog, show= "*")
-    passwordLabel = Label(windowLog, text= "Password:")
-    loginButton = Button(windowLog, text="Login")
-    usernameEntry.grid(row=0, column=1)
-    passwordEntry.grid(row=1, column=1)
-    usernameLabel.grid(row=0, column=0)
-    passwordLabel.grid(row=1, column=0)
-    loginButton.grid(row=2, column=1)
-
-
-
+def flush():
+    pass
+def printdb():
+    pass
 
 def primeCheck(event):
     if re.search('[a-zA-Z]', entry1.get()) or set(' [~!=@#$%^`&*()_+{}":;\']+$').intersection(entry1.get()):
@@ -48,31 +38,24 @@ def primeCheck(event):
     else:
         NPbutton.config(bg='Red')
         root.after(1000, lambda: NPbutton.config(bg='grey'))
-
-
-def sbTime():
-     pass   # placeholder string
-
-
-def fbTime():
-    return "test"  # placeholder string
-
-
+    #update labels for SB FB
+    sbtime.config(text= "Slowbrain time: " & "dbObjectcall")
+    fbtime.config(text= "Fastbrain time: " & "dbObjectcall")
 
 #main portion of GUI
 root = Tk()  # Creates object root that has properties for the window. Access via .instr
 centerWindow()
 # configuration portion
 
-SBtime = Label(root, text="Slowbrain Time",font="Times 12")
-FBtime = Label(root, text="Fastbrain Time",font="Times 12")
-FBtime.grid(row=1, column =1)
-SBtime.grid(row=1, column =0)
+sbtime = Label(root, text="Slowbrain Time",font="Times 12")
+fbTime = Label(root, text="Fastbrain Time", font="Times 12")
+fbTime.grid(row=1, column =1)
+sbtime.grid(row=1, column =0)
 entry1 = Entry(root)
 mesgLabel = Label(root, text="Enter Value to Check: ", font="Times 12")
 Pbutton = Label(root, text="Prime", fg='Black', bg='grey', font="Times 20")
 NPbutton = Label(root, text="Not-Prime", fg='black', bg='grey', font="Times 20")
-loginWindow = Button(root, command=loginButton, text= "Enter Admin Mode", fg='black', bg='grey')
+loginWindow = Button(root, command=dbConfig, text= "Enter Admin Mode", fg='black', bg='grey')
 
 
 
