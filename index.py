@@ -13,14 +13,17 @@ def brain(input):
 
     if FBsearch == True:
         FB.printFB() # print all fast brain values
+        return True
     else:
-        SB.SBPrimeDetermination(input)
+        x = SB.SBPrimeDetermination(input)
         FB.printFB() # print all fast brain values
-# quick test of our brain function
-# for x in range (100,400):
+        return x
+
+#quick test of our brain function
+# for x in range (10000,50000):
 #     brain(x)
 #
-# for x in range (100,400):
+# for x in range (10000,50000):
 #     brain(x)
-input = 1
-brain(input)
+
+#brain(8)

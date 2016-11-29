@@ -5,7 +5,7 @@
 from Tkinter import *  # Importing the Tkinter (tool box) library
 import tkMessageBox
 import Tkinter as tk
-from index_GUI_test import*
+from index import*
 
 symbol = "~`!@#$%^&*()_-+={}[]:>;',</?*-+ "
 count = 0
@@ -39,8 +39,8 @@ def primeCheck(event):
         NPbutton.config(bg='Red')
         root.after(1000, lambda: NPbutton.config(bg='grey'))
     #update labels for SB FB
-    sbtime.config(text= "Slowbrain time: " & "dbObjectcall")
-    fbtime.config(text= "Fastbrain time: " & "dbObjectcall")
+    #sbtime.config(text= "Slowbrain time: " & "dbObjectcall")
+    #fbtime.config(text= "Fastbrain time: " & "dbObjectcall")
 
 #main portion of GUI
 root = Tk()  # Creates object root that has properties for the window. Access via .instr

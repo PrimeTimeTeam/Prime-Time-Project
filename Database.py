@@ -181,7 +181,7 @@ class Database(object):
         print("Found " + str(found[0]))
         return int(found[0])
     
-      def last (self): # Get the last prime number inputted into the database
+    def last (self): # Get the last prime number inputted into the database
                      # This will only work if we give each entry an order number
                      # In this case, column num increase by 1 for each input
         key = self.connect()
