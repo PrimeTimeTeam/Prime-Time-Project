@@ -7,7 +7,6 @@ from __future__ import print_function
 import mysql.connector
 from mysql.connector import errorcode
 
-
 class Database(object):
     def __init__(self, user, password, host, database):
         self.user = user
@@ -16,29 +15,30 @@ class Database(object):
         self.database = database
 
     def connect(self):
-        #this function will connect us to the db
+        # this method will connect us to the db
         try:
             key = mysql.connector.connect(user = self.user, password = self.password , host = self.host, database = self.database)
-            print ("  Success: Connected to Database")  # success
+            print ("   Success: Connected to Database")  # success
+            return key
         except mysql.connector.Error as e:  # fail ... what's the issue?
             if e.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print("  Something is wrong with the username or password")
+                print("   Something is wrong with the username or password")
             elif e.errno == errorcode.ER_BAD_DB_ERROR:
-                print("  Database doesn't exist")
+                print("   Database doesn't exist")
             else:
                 print(e)
-        return key
 
     def StorePrimeFBtime(self, prime, FBtime):
+        # this method will store the prime number and fast brain time in the database
         key = self.connect()
 
         mycursor = key.cursor()
 
-        print ("  Processing: Inserting prime number & FBtime into Database...")
+        print ("   Processing: Inserting prime number & FBtime into Database...")
         addNum = ("INSERT INTO test_table (a, FBtime) VALUES (%(prime)s, %(FBtime)s)") #sql command to insert x
-        X = {'prime' : prime, 'FBtime' : FBtime} # used a dic. incase we want to input multi. values
+        X = {'prime' : prime, 'FBtime' : FBtime}
         mycursor.execute(addNum, X)
-        print ("  Success: Prime number & FBtime inserted into Database")
+        print ("   Success: Prime number & FBtime inserted into Database")
 
         key.commit()
         mycursor.close()
@@ -50,11 +50,11 @@ class Database(object):
 
         mycursor = key.cursor()
 
-        print ("  Processing: Inserting prime number & SBtime into Database...")
+        print ("   Processing: Inserting prime number & SBtime into Database...")
         addNum = ("INSERT INTO test_table (a, SBtime) VALUES (%(prime)s, %(SBtime)s)") #sql command to insert SBtime & prime
         X = {'prime' : prime, 'SBtime' : SBtime}
         mycursor.execute(addNum, X)
-        print ("  Success: Prime number & SBtime inserted into Database")
+        print ("   Success: Prime number & SBtime inserted into Database")
 
         key.commit()
         mycursor.close()
@@ -65,12 +65,11 @@ class Database(object):
         key = self.connect()
         mycursor = key.cursor()
 
-        print ("  ~~~Processing: appending FBtime of ( " , prime , ") ...")
+        print ("   Processing: appending FBtime of ( " , prime , ") ...")
 
         append = ("UPDATE test_table SET FBtime = %s WHERE a = %s")
         X = (FBtime, prime)
         mycursor.execute(append, X)
-
 
         key.commit()
         mycursor.close()
@@ -80,23 +79,24 @@ class Database(object):
         key = self.connect()
         mycursor = key.cursor()
 
-        print ("  Processing: Deleting number from Database...")
+        print ("   Processing: Deleting number from Database...")
 
         delNum = ("DELETE FROM test_table WHERE a = (%(x)s);") #sql command to insert x
         X = {'x' : num} # used a dic. incase we want to input multi. values
         mycursor.execute(delNum, X)
 
-        print ("  Success: Number deleted from Database")
+        print ("   Success: Number deleted from Database")
 
         key.commit()
         mycursor.close()
         key.close()
 
     def search(self, num):
+        # this method will search for a number in the database
         key = self.connect()
         mycursor = key.cursor()
 
-        print ("  Processing: searching for number (", num , ") in Database...")
+        print ("   Processing: searching for number (", num , ") in Database...")
 
         seaNum = ("SELECT a FROM test_table WHERE a = (%(x)s);") #sql command to insert x
         X = {'x' : num}
@@ -105,22 +105,20 @@ class Database(object):
         found = mycursor.fetchone()
 
         if found == None:
-            print ("Not found")
+            print ("[ Not found ]")
             return False
         else:
-            print("Found " + str(found[0]))
+            print("[ Found " + str(found[0]), " ]")
             return True
 
-        print ("  Success: Number searched from Database")
-        # mycursor.close()
-        # key.close()
+        print ("   Success: Number searched from Database")
 
     def printAll (self):
         #to print all prime values
         key = self.connect()
         mycursor = key.cursor()
 
-        print ("  Processing: Printing...")
+        print ("   Processing: Printing...")
 
         mycursor.execute("USE TEST_DB")  # select the database
         mycursor.execute("SELECT a from test_table")  # execute 'SHOW TABLES' (but data is not returned)
@@ -128,22 +126,23 @@ class Database(object):
         for (test_table) in mycursor:
             print(str(test_table[0]), ", ", end="")
 
-        print ("\n  Success: Printed")
+        print ("\n   Success: Printed")
 
         key.commit()
         mycursor.close()
         key.close()
 
     def flush(self):
+        # this method will delete all rows in the database
         key = self.connect()
         mycursor = key.cursor()
 
-        print ("      Processing: Deleting all numbers from Database...")
+        print ("   Processing: Deleting all numbers from Database...")
 
         delNum = ("Truncate table test_table") #
         mycursor.execute(delNum)
 
-        print ("      Success: Numbers deleted from Database")
+        print ("   Success: Numbers deleted from Database")
 
         key.commit()
         mycursor.close()
@@ -155,7 +154,7 @@ class Database(object):
         key = self.connect()
         mycursor = key.cursor()
 
-        print ("  Processing: searching for last input in Database...")
+        print ("   Processing: searching for last input in Database...")
 
         seaNum = ("SELECT a FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
         mycursor.execute(seaNum)
@@ -171,7 +170,7 @@ class Database(object):
         key = self.connect()
         mycursor = key.cursor()
 
-        print ("  Processing: searching for last input in Database...")
+        print ("   Processing: searching for last input in Database...")
 
         seaNum = ("SELECT num FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
         mycursor.execute(seaNum)

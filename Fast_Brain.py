@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Database import Database
 import time
 
@@ -20,12 +21,12 @@ class FastBrain(object):
         end = time.time()
         if search == True:
             self.FBtime = end - start
-            print("its in the Fast Brain ======> prime? " + str(search))
-            print("The FB search took ", str(self.FBtime), " seconds.")
+            print("its in the Fast Brain ===================> prime? " + str(search))
+            print("The FB search took ", self.FBtime, " seconds.")
             FBdatabase.appendFBtime(self.number, self.FBtime)
             return True
         else:
-            print("The FB search took ", str(self.FBtime), " seconds.")
+            print("The FB search took ", self.FBtime, " seconds.")
             return False
 
     def printFB(self):
