@@ -22,7 +22,7 @@ class SlowBrain(object):
         start = time.time()
 
         if self.number % 2 == 0: # Is the number even?
-            #print ("not prime (its even)")
+            print("Slow Brain: ===================> [ not prime ]")
             return False
         else:
             x = math.sqrt(self.number) # Find the ranges max for checking prime

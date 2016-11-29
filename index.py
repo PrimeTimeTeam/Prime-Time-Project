@@ -18,10 +18,10 @@ def brain(input):
         FB.printFB() # print all fast brain values
 
 #quick test of our brain function
-for x in range (1,1000):
-    brain(x)
+# for x in range (10000,50000):
+#     brain(x)
+#
+# for x in range (10000,50000):
+#     brain(x)
 
-for x in range (1,1000):
-    brain(x)
-
-#brain(7)
+brain(7)
