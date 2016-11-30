@@ -20,28 +20,29 @@ def centerWindow():
     y = (root.winfo_screenheight() - root.winfo_reqheight()) / 2
     root.geometry("+%d+%d" % (x, y))                         #takes in variables for centering
 
-def dbConfig():
+def dbConfig(gui_db):
     #make new window, allow for flushing db
     windowDB = tk.Toplevel(root)
-    flushdbButton = Button(windowDB, text="flush database",command = flush())
-    secondButton = Button(windowDB, text=" do something else",command = printdb()) #add ,command = DB.flush()
+    flushdbButton = Button(windowDB, text="flush database",command = flush(gui_db))
+    secondButton = Button(windowDB, text=" do something else",command = printdb(gui_db)) #add ,command = DB.flush()
     flushdbButton.pack()
     secondButton.pack()
 
-def flush():
-    pass
-def printdb():
-    pass
+def flush(gui_db):
+    gui_db.flush()
+
+def printdb(gui_db):
+    gui_db.printAll()
 
 def primeCheck(event):
-    
+
     gui_db = Database(user, password, host, database)
     gui_db.connect()
     SBtime = gui_db.SBtimeReturn(entry1.get()) # the sb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     FBtime = gui_db.FBtimeReturn(entry1.get()) # the fb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     sbt = str(SBtime)
     fbt = str(FBtime)
-    
+
     if re.search('[a-zA-Z]', entry1.get()) or set(' [~!=@#$%^`&*()_+{}":;\']+$').intersection(entry1.get()):
         tkMessageBox.showwarning("INVALID ENTRY", "Please enter only digits")
         return
@@ -50,7 +51,7 @@ def primeCheck(event):
         fbTime.config(text= "SBtime " + sbt)
         sbTime.config(text= "FBtime " + fbt)
         root.after(1000, lambda: Pbutton.config(bg='grey'))
-        
+
     else:
         NPbutton.config(bg='Red')
         root.after(1000, lambda: NPbutton.config(bg='grey'))
