@@ -20,6 +20,6 @@ def test(number):
                  
 
 start = time.time()
-print(test(49979687))
+print(test(491))
 end = time.time()
 print(end - start)

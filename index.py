@@ -1,25 +1,30 @@
-from Database import Database
 from Fast_Brain import FastBrain
 from Slow_Brain import SlowBrain
-
 
 user = 'root'
 password = '1991'
 host = 'localhost'
 database = 'TEST_DB'
 
-
 def brain(input):
     SB = SlowBrain()
     FB = FastBrain(user, password, host, database)
+    FBsearch = FB.FBsearch(input) # run a fast brain search
 
-    if FB.FBsearch(input) == True:
-        print("its in the FB ======> " + str(FB.FBsearch(input)))
+
+    if FBsearch == True:
+        FB.printFB() # print all fast brain values
+        return True
     else:
-        print("using the SB ======> " + str(SB.SBPrimeDetermination(input)))
-        FB.addit()
+        x = SB.SBPrimeDetermination(input)
+        FB.printFB() # print all fast brain values
+        return x
 
+#quick test of our brain function
+# for x in range (10000,50000):
+#     brain(x)
+#
+# for x in range (10000,50000):
+#     brain(x)
 
-
-input = 5
-brain(input)
+brain(8)

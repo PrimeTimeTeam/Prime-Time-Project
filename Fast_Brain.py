@@ -1,9 +1,11 @@
 from Database import Database
+import time
 
 
 class FastBrain(object):
     def __init__(self, user, password, host, database):
         self.number = None
+        self.FBtime = 0.00
         self.user = user
         self.password = password
         self.host = host
@@ -11,12 +13,22 @@ class FastBrain(object):
 
     def FBsearch(self,d):
         self.number = d
+        print("FAST_BRAIN SEARCH")
         FBdatabase = Database(self.user, self.password, self.host, self.database)
-        FBdatabase.connect()
-        return FBdatabase.search(self.number)
+        start = time.time()
+        search = FBdatabase.search(self.number)
+        end = time.time()
+        if search == True:
+            self.FBtime = end - start
+            print("its in the Fast Brain ======> prime? " + str(search))
+            print("The FB search took ", str(self.FBtime), " seconds.")
+            FBdatabase.appendFBtime(self.number, self.FBtime)
+            return True
+        else:
+            print("The FB search took ", str(self.FBtime), " seconds.")
+            return False
 
-    def addit(self):
+    def printFB(self):
+        print("FAST_BRAIN DATABASE PRINT")
         FBdatabase = Database(self.user, self.password, self.host, self.database)
-        FBdatabase.connect()
-        FBdatabase.input(self.number)
-        return True
+        FBdatabase.printAll()

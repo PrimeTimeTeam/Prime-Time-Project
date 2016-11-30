@@ -11,4 +11,11 @@ DB = Database(user, password, host, database) # using test key
 DB.connect()
 DB.printAll()
 #DB.input(778)
-#DB.flush()
+DB.flush()
+
+#DB.StorePrimeSBtime(55, .1)
+
+#DB.appendSBtime(55,3)
+
+print("--------")
+DB.printAll()
