@@ -22,8 +22,10 @@ def centerWindow():
 
 def dbConfig():
     #make new window, allow for flushing db
+    gui_db = Database(user, password, host, database)
+    gui_db.connect()
     windowDB = tk.Toplevel(root)
-    flushdbButton = Button(windowDB, text="flush database",command = flush())
+    flushdbButton = Button(windowDB, text="flush database",command = gui_db.flush())
     secondButton = Button(windowDB, text=" do something else",command = printdb()) #add ,command = DB.flush()
     flushdbButton.pack()
     secondButton.pack()
