@@ -34,21 +34,29 @@ def printdb():
     pass
 
 def primeCheck(event):
+    
+    gui_db = Database(user, password, host, database)
+    gui_db.connect()
+    SBtime = gui_db.SBtimeReturn(entry1.get()) # the sb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    FBtime = gui_db.FBtimeReturn(entry1.get()) # the fb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    sbt = str(SBtime)
+    fbt = str(FBtime)
+    
     if re.search('[a-zA-Z]', entry1.get()) or set(' [~!=@#$%^`&*()_+{}":;\']+$').intersection(entry1.get()):
         tkMessageBox.showwarning("INVALID ENTRY", "Please enter only digits")
         return
     if brain(int(entry1.get())):
         Pbutton.config(bg='Green')
+        fbTime.config(text= "SBtime " + sbt)
+        sbTime.config(text= "FBtime " + fbt)
         root.after(1000, lambda: Pbutton.config(bg='grey'))
-
+        
     else:
         NPbutton.config(bg='Red')
         root.after(1000, lambda: NPbutton.config(bg='grey'))
+        fbTime.config(text='0.0000000')
+        sbTime.config(text='0.0000000')
 
-    gui_db = Database(user, password, host, database)
-    gui_db.connect()
-    SBtime = gui_db.SBtimeReturn(entry1.get()) # the sb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    FBtime = gui_db.FBtimeReturn(entry1.get()) # the fb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     # update labels for SB FB
     # sbtime.config(text= "Slowbrain time: " & "dbObjectcall")
@@ -59,10 +67,10 @@ root = Tk()  # Creates object root that has properties for the window. Access vi
 centerWindow()
 # configuration portion
 
-sbtime = Label(root, text="Slowbrain Time",font="Times 12")
+sbTime = Label(root, text="Slowbrain Time",font="Times 12")
 fbTime = Label(root, text="Fastbrain Time", font="Times 12")
 fbTime.grid(row=1, column =1)
-sbtime.grid(row=1, column =0)
+sbTime.grid(row=1, column =0)
 entry1 = Entry(root)
 mesgLabel = Label(root, text="Enter Value to Check: ", font="Times 12")
 Pbutton = Label(root, text="Prime", fg='Black', bg='grey', font="Times 20")
