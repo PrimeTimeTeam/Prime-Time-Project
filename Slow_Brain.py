@@ -47,6 +47,3 @@ class SlowBrain(object):
             db.StorePrimeSBtime(self.number,self.SBtime)
             return True # Prime
 
-#testing
-# a = SlowBrain()
-# print("here" + str(a.SBPrimeDetermination(88)))

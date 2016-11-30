@@ -2,7 +2,6 @@ from __future__ import print_function
 from Database import Database
 import time
 
-
 class FastBrain(object):
     def __init__(self, user, password, host, database):
         self.number = None
@@ -13,6 +12,7 @@ class FastBrain(object):
         self.database = database
 
     def FBsearch(self,d):
+        #this method will search the database
         self.number = d
         print("FAST_BRAIN SEARCH")
         FBdatabase = Database(self.user, self.password, self.host, self.database)
@@ -30,6 +30,7 @@ class FastBrain(object):
             return False
 
     def printFB(self):
+        #this method will print all values
         print("FAST_BRAIN DATABASE PRINT")
         FBdatabase = Database(self.user, self.password, self.host, self.database)
         FBdatabase.printAll()

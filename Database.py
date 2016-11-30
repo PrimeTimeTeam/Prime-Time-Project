@@ -1,12 +1,11 @@
 #DATABASE SCHEMA
 #Database => TEST_DB
 #Table => test_table
-#Column=> a (int), SBtime (double), FBtime (double)
+#Column=> a (BIGINT), SBtime (DOUBLE), FBtime (DOUBLE)
 
 from __future__ import print_function
 import mysql.connector
 from mysql.connector import errorcode
-
 
 class Database(object):
     def __init__(self, user, password, host, database):
@@ -16,7 +15,7 @@ class Database(object):
         self.database = database
 
     def connect(self):
-        #this function will connect us to the db
+        #this method will connect us to the db
         try:
             key = mysql.connector.connect(user = self.user, password = self.password , host = self.host, database = self.database)
             print ("  Success: Connected to Database")  # success
@@ -30,8 +29,8 @@ class Database(object):
         return key
 
     def StorePrimeFBtime(self, prime, FBtime):
+        #this method will store a prime number and the fbtime
         key = self.connect()
-
         mycursor = key.cursor()
 
         print ("  Processing: Inserting prime number & FBtime into Database...")
@@ -46,12 +45,12 @@ class Database(object):
         return
 
     def StorePrimeSBtime(self, prime, SBtime):
+        #this method will store a prime number and the sbtime
         key = self.connect()
-
         mycursor = key.cursor()
 
         print ("  Processing: Inserting prime number & SBtime into Database...")
-        addNum = ("INSERT INTO test_table (a, SBtime) VALUES (%(prime)s, %(SBtime)s)") #sql command to insert SBtime & prime
+        addNum = ("INSERT INTO test_table (a, SBtime) VALUES (%(prime)s, %(SBtime)s)")
         X = {'prime' : prime, 'SBtime' : SBtime}
         mycursor.execute(addNum, X)
         print ("  Success: Prime number & SBtime inserted into Database")
@@ -62,6 +61,7 @@ class Database(object):
         return
 
     def appendFBtime(self, prime, FBtime):
+        #this method will append the fbtime of a prime number
         key = self.connect()
         mycursor = key.cursor()
 
@@ -71,12 +71,12 @@ class Database(object):
         X = (FBtime, prime)
         mycursor.execute(append, X)
 
-
         key.commit()
         mycursor.close()
         key.close()
 
     def remove (self, num):
+        #this method will remove a prime number
         key = self.connect()
         mycursor = key.cursor()
 
@@ -93,15 +93,14 @@ class Database(object):
         key.close()
 
     def search(self, num):
+        #this method will search for a prime number (output bool)
         key = self.connect()
         mycursor = key.cursor()
 
         print ("  Processing: searching for number (", num , ") in Database...")
-
         seaNum = ("SELECT a FROM test_table WHERE a = (%(x)s);") #sql command to insert x
         X = {'x' : num}
         mycursor.execute(seaNum, X)
-
         found = mycursor.fetchone()
 
         if found == None:
@@ -110,12 +109,11 @@ class Database(object):
         else:
             print("Found " + str(found[0]))
             return True
-
         print ("  Success: Number searched from Database")
-        # mycursor.close()
-        # key.close()
+
 
     def SBtimeReturn(self, num):
+        #this method will return the sbtime of a prime number
         key = self.connect()
         mycursor = key.cursor()
 
@@ -135,10 +133,9 @@ class Database(object):
             return found[0]
 
         print ("  Success: Number searched from Database")
-        # mycursor.close()
-        # key.close()
 
     def FBtimeReturn(self, num):
+        #this method will return the fbtime of a prime number
         key = self.connect()
         mycursor = key.cursor()
 
@@ -158,10 +155,9 @@ class Database(object):
             return found[0]
 
         print ("  Success: Number searched from Database")
-        # mycursor.close()
-        # key.close()
 
     def primeReturn(self, id):
+        #this method will return the prime number by using it's id
         key = self.connect()
         mycursor = key.cursor()
 
@@ -180,7 +176,6 @@ class Database(object):
             print("primeReturn: Found " + str(found[0]))
             return found[0]
 
-
     def printAll (self):
         #to print all prime values
         key = self.connect()
@@ -188,8 +183,8 @@ class Database(object):
 
         print ("  Processing: Printing...")
 
-        mycursor.execute("USE TEST_DB")  # select the database
-        mycursor.execute("SELECT a from test_table")  # execute 'SHOW TABLES' (but data is not returned)
+        mycursor.execute("USE TEST_DB")
+        mycursor.execute("SELECT a from test_table")
 
         for (test_table) in mycursor:
             print(str(test_table[0]), ", ", end="")
@@ -201,6 +196,7 @@ class Database(object):
         key.close()
 
     def flush(self):
+        #this method will delete all values
         key = self.connect()
         mycursor = key.cursor()
 
@@ -214,4 +210,3 @@ class Database(object):
         key.commit()
         mycursor.close()
         key.close()
-
