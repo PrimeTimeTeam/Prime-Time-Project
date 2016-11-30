@@ -30,12 +30,11 @@ def dbConfig():
     flushdbButton = Button(windowDB, text="flush database",command=gui_db.flush)
 
     secondButton = Button(windowDB, text=" Print database", command=printPrimes)
+    Exit = Button(windowDB, text=" Quit", command=quit)
     flushdbButton.pack()
     secondButton.pack()
-
+    Exit.pack()
     windowDB.update_idletasks()
-
-
 
 def primeCheck(event):
     
@@ -61,8 +60,6 @@ def primeCheck(event):
         fbTime.config(text='0.0000000')
         sbTime.config(text='0.0000000')
 def printPrimes():
-    #]windowPrint = tk.Toplevel(root)
-    lst = ['a', 'b', 'c', 'd']
     gui_db = Database(user, password, host, database)
     gui_db.connect()
     x=1
@@ -73,9 +70,8 @@ def printPrimes():
         x=x+1
     t.pack()
 
-
-
-
+def quit():
+    exit()
 
 #main portion of GUI
 root = Tk()  # Creates object root that has properties for the window. Access via .instr
