@@ -27,4 +27,3 @@ def brain(input):
 # for x in range (10000,50000):
 #     brain(x)
 
-brain(199)

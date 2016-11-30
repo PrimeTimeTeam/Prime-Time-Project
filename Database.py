@@ -215,14 +215,3 @@ class Database(object):
         mycursor.close()
         key.close()
 
-#db.Database()
-
-user = 'root'
-password = '1991'
-host = 'localhost'
-database = 'TEST_DB'
-
-mytestDB = Database(user, password, host, database)  # using test key
-mytestDB.connect()  # Database Connection
-
-print(mytestDB.primeReturn(1))
