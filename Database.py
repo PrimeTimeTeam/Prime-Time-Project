@@ -181,37 +181,7 @@ class Database(object):
         print("Found " + str(found[0]))
         return int(found[0])
     
-      def last (self): # Get the last prime number inputted into the database
-                     # This will only work if we give each entry an order number
-                     # In this case, column num increase by 1 for each input
-        key = self.connect()
-        mycursor = key.cursor()
-
-        print ("  Processing: searching for last input in Database...")
-
-        seaNum = ("SELECT a FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
-        mycursor.execute(seaNum)
-
-        found = mycursor.fetchone()
-
-        print("Found " + str(found[0]))
-        return int(found[0])
-
-    def last2 (self): # Get the last number id inputted into the database
-                     # This will only work if we give each entry an order number
-                     # In this case, column num increase by 1 for each input
-        key = self.connect()
-        mycursor = key.cursor()
-
-        print ("  Processing: searching for last input in Database...")
-
-        seaNum = ("SELECT num FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
-        mycursor.execute(seaNum)
-
-        found = mycursor.fetchone()
-
-        print("Found " + str(found[0]))
-        return int(found[0])
+      
 
     # def StorePrime (self, num):
     #     key = self.connect()
