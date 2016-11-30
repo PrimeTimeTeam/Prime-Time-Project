@@ -170,7 +170,7 @@ class Database(object):
         seaNum = ("SELECT a FROM test_table WHERE idtest_table = (%(x)s);") #sql command to insert x
         X = {'x' : id}
         mycursor.execute(seaNum, X)
-
+#
         found = mycursor.fetchone()
 
         if found == None:
