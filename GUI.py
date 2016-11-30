@@ -28,9 +28,9 @@ def dbConfig():
     windowDB = tk.Toplevel(root)
     flushdbButton = Button(windowDB, text="flush database",command = gui_db.flush())
     dboutputbox = Text(windowDB, text="")
-    secondButton = Button(windowDB, text=" do something else",command = dboutputbox.config(text=gui_db.flush())) #add ,command = DB.flush()
+    #secondButton = Button(windowDB, text=" Print database", command=dboutputbox.config(text=gui_db.printALL()),height=2, width=30)
     flushdbButton.pack()
-    secondButton.pack()
+    #secondButton.pack()
     dboutputbox.pack()
     windowDB.update_idletasks()
 
@@ -40,15 +40,18 @@ def primeCheck(event):
     
     gui_db = Database(user, password, host, database)
     gui_db.connect()
-    SBtime = gui_db.SBtimeReturn(entry1.get()) # the sb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    FBtime = gui_db.FBtimeReturn(entry1.get()) # the fb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    sbt = str(SBtime)
-    fbt = str(FBtime)
+
     
     if re.search('[a-zA-Z]', entry1.get()) or set(' [~!=@#$%^`&*()_+{}":;\']+$').intersection(entry1.get()):
         tkMessageBox.showwarning("INVALID ENTRY", "Please enter only digits")
         return
     if brain(int(entry1.get())):
+        SBtime = gui_db.SBtimeReturn(
+            entry1.get())  # the sb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        FBtime = gui_db.FBtimeReturn(
+            entry1.get())  # the fb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        sbt = str(SBtime)
+        fbt = str(FBtime)
         Pbutton.config(bg='Green')
         fbTime.config(text= "SBtime " + sbt)
         sbTime.config(text= "FBtime " + fbt)
