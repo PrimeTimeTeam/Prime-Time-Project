@@ -20,14 +20,18 @@ class SlowBrain(object):
 
         start = time.time()
 
+        if self.number == 1:
+            print ("Slow Brain: [not prime]")
+            return False
+
         if self.number % 2 == 0: # Is the number even?
-            #print ("not prime (its even)")
+            print ("Slow Brain: [not prime]")
             return False
         else:
             x = math.sqrt(self.number) # Find the ranges max for checking prime
-            x = int(x)+1 # rounds number up
+            x = int(x)+1 # rounds number down
             z = 0.0 # Needs to be decimal so python doesn't round to zero
-            for i in range(3, x):
+            for i in range(3, x, 2):
                 z = self.number % i
                 if z == 0: # If a number divides evenly
                     end = time.time()
@@ -35,13 +39,13 @@ class SlowBrain(object):
                     print("The SB search took ", str(self.SBtime), " seconds.")
                     print ("Slow Brain: [not prime]")
                     return False # Not Prime
-                if i + 1 == x: # Has it checked against all number?
-                    end = time.time()
-                    self.SBtime = end - start
-                    print ("Slow Brain: [prime]")
-                    print("The SB search took ", str(self.SBtime), " seconds.")
-                    db.StorePrimeSBtime(self.number,self.SBtime)
-                    return True # Prime
+
+            end = time.time()
+            self.SBtime = end - start
+            print ("Slow Brain: [prime]")
+            print("The SB search took ", str(self.SBtime), " seconds.")
+            db.StorePrimeSBtime(self.number,self.SBtime)
+            return True # Prime
 
 #testing
 # a = SlowBrain()

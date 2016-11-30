@@ -11,11 +11,14 @@ def brain(input):
     FB = FastBrain(user, password, host, database)
     FBsearch = FB.FBsearch(input) # run a fast brain search
 
+
     if FBsearch == True:
         FB.printFB() # print all fast brain values
+        return True
     else:
-        SB.SBPrimeDetermination(input)
+        x = SB.SBPrimeDetermination(input)
         FB.printFB() # print all fast brain values
+        return x
 
 #quick test of our brain function
 # for x in range (10000,50000):
@@ -24,4 +27,4 @@ def brain(input):
 # for x in range (10000,50000):
 #     brain(x)
 
-brain(7)
+brain(199)
