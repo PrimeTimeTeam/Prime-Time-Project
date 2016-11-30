@@ -27,7 +27,7 @@ def dbConfig():
     gui_db.connect()
     windowDB = tk.Toplevel(root)
     flushdbButton = Button(windowDB, text="flush database",command = gui_db.flush())
-    dboutputbox = Text(windowDB, text="")
+    dboutputbox = Text(windowDB, text="",height=2,width=30)
     #secondButton = Button(windowDB, text=" Print database", command=dboutputbox.config(text=gui_db.printALL()),height=2, width=30)
     flushdbButton.pack()
     #secondButton.pack()
