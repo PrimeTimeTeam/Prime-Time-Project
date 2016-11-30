@@ -7,6 +7,7 @@ import tkMessageBox
 import Tkinter as tk
 from index import*
 from Database import Database
+import subprocess as sub
 
 user = 'root'
 password = '1991'
@@ -21,19 +22,19 @@ def centerWindow():
     root.geometry("+%d+%d" % (x, y))                         #takes in variables for centering
 
 def dbConfig():
-    #make new window, allow for flushing db
+
     gui_db = Database(user, password, host, database)
     gui_db.connect()
     windowDB = tk.Toplevel(root)
     flushdbButton = Button(windowDB, text="flush database",command = gui_db.flush())
-    secondButton = Button(windowDB, text=" do something else",command = printdb()) #add ,command = DB.flush()
+    dboutputbox = Text(windowDB, text="")
+    secondButton = Button(windowDB, text=" do something else",command = dboutputbox.config(text=gui_db.flush())) #add ,command = DB.flush()
     flushdbButton.pack()
     secondButton.pack()
+    dboutputbox.pack()
+    windowDB.update_idletasks()
 
-def flush():
-    pass
-def printdb():
-    pass
+
 
 def primeCheck(event):
     
