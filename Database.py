@@ -161,6 +161,25 @@ class Database(object):
         # mycursor.close()
         # key.close()
 
+    def primeReturn(self, id):
+        key = self.connect()
+        mycursor = key.cursor()
+
+        print ("  Processing: searching for number (", id , ") in Database...")
+
+        seaNum = ("SELECT a FROM test_table WHERE idtest_table = (%(x)s);") #sql command to insert x
+        X = {'x' : id}
+        mycursor.execute(seaNum, X)
+
+        found = mycursor.fetchone()
+
+        if found == None:
+            print ("primeReturn: Not found")
+            return False
+        else:
+            print("primeReturn: Found " + str(found[0]))
+            return found[0]
+
 
     def printAll (self):
         #to print all prime values
@@ -197,3 +216,13 @@ class Database(object):
         key.close()
 
 #db.Database()
+
+user = 'root'
+password = '1991'
+host = 'localhost'
+database = 'TEST_DB'
+
+mytestDB = Database(user, password, host, database)  # using test key
+mytestDB.connect()  # Database Connection
+
+print(mytestDB.primeReturn(1))

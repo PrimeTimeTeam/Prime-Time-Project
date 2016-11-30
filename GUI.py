@@ -20,18 +20,19 @@ def centerWindow():
     x = (root.winfo_screenwidth() - root.winfo_reqwidth()) / 2
     y = (root.winfo_screenheight() - root.winfo_reqheight()) / 2
     root.geometry("+%d+%d" % (x, y))                         #takes in variables for centering
+    root.title("Prime Time")
 
 def dbConfig():
 
     gui_db = Database(user, password, host, database)
     gui_db.connect()
     windowDB = tk.Toplevel(root)
-    flushdbButton = Button(windowDB, text="flush database",command = gui_db.flush())
-    dboutputbox = Text(windowDB, text="",height=2,width=30)
-    #secondButton = Button(windowDB, text=" Print database", command=dboutputbox.config(text=gui_db.printALL()),height=2, width=30)
+    flushdbButton = Button(windowDB, text="flush database",command=gui_db.flush)
+
+    secondButton = Button(windowDB, text=" Print database", command=printPrimes)
     flushdbButton.pack()
-    #secondButton.pack()
-    dboutputbox.pack()
+    secondButton.pack()
+
     windowDB.update_idletasks()
 
 
@@ -40,21 +41,18 @@ def primeCheck(event):
     
     gui_db = Database(user, password, host, database)
     gui_db.connect()
-
     
     if re.search('[a-zA-Z]', entry1.get()) or set(' [~!=@#$%^`&*()_+{}":;\']+$').intersection(entry1.get()):
         tkMessageBox.showwarning("INVALID ENTRY", "Please enter only digits")
         return
     if brain(int(entry1.get())):
-        SBtime = gui_db.SBtimeReturn(
-            entry1.get())  # the sb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        FBtime = gui_db.FBtimeReturn(
-            entry1.get())  # the fb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        SBtime = gui_db.SBtimeReturn(entry1.get())
+        FBtime = gui_db.FBtimeReturn(entry1.get())
         sbt = str(SBtime)
         fbt = str(FBtime)
         Pbutton.config(bg='Green')
-        fbTime.config(text= "SBtime " + sbt)
-        sbTime.config(text= "FBtime " + fbt)
+        fbTime.config(text= "SBtime: " + sbt + " seconds")
+        sbTime.config(text= "FBtime: " + fbt + " seconds")
         root.after(1000, lambda: Pbutton.config(bg='grey'))
         
     else:
@@ -62,11 +60,22 @@ def primeCheck(event):
         root.after(1000, lambda: NPbutton.config(bg='grey'))
         fbTime.config(text='0.0000000')
         sbTime.config(text='0.0000000')
+def printPrimes():
+    #]windowPrint = tk.Toplevel(root)
+    lst = ['a', 'b', 'c', 'd']
+    gui_db = Database(user, password, host, database)
+    gui_db.connect()
+    x=1
+
+    t = Text(root)
+    while gui_db.primeReturn(x):
+        t.insert(END, str(gui_db.primeReturn(x)) + ", ")
+        x=x+1
+    t.pack()
 
 
-    # update labels for SB FB
-    # sbtime.config(text= "Slowbrain time: " & "dbObjectcall")
-    # fbTime.config(text= "Fastbrain time: " & "dbObjectcall")
+
+
 
 #main portion of GUI
 root = Tk()  # Creates object root that has properties for the window. Access via .instr
