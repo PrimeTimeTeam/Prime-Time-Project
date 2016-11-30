@@ -6,6 +6,12 @@ from Tkinter import *  # Importing the Tkinter (tool box) library
 import tkMessageBox
 import Tkinter as tk
 from index import*
+from Database import Database
+
+user = 'root'
+password = '1991'
+host = 'localhost'
+database = 'TEST_DB'
 
 symbol = "~`!@#$%^&*()_-+={}[]:>;',</?*-+ "
 count = 0
@@ -38,9 +44,15 @@ def primeCheck(event):
     else:
         NPbutton.config(bg='Red')
         root.after(1000, lambda: NPbutton.config(bg='grey'))
-    #update labels for SB FB
-    #sbtime.config(text= "Slowbrain time: " & "dbObjectcall")
-    #fbtime.config(text= "Fastbrain time: " & "dbObjectcall")
+
+    gui_db = Database(user, password, host, database)
+    gui_db.connect()
+    SBtime = gui_db.SBtimeReturn(entry1.get()) # the sb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    FBtime = gui_db.FBtimeReturn(entry1.get()) # the fb time is stored in this variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    # update labels for SB FB
+    # sbtime.config(text= "Slowbrain time: " & "dbObjectcall")
+    # fbTime.config(text= "Fastbrain time: " & "dbObjectcall")
 
 #main portion of GUI
 root = Tk()  # Creates object root that has properties for the window. Access via .instr

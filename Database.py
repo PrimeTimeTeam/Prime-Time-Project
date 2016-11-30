@@ -115,6 +115,53 @@ class Database(object):
         # mycursor.close()
         # key.close()
 
+    def SBtimeReturn(self, num):
+        key = self.connect()
+        mycursor = key.cursor()
+
+        print ("  Processing: searching for number (", num , ") in Database...")
+
+        seaNum = ("SELECT SBtime FROM test_table WHERE a = (%(x)s);") #sql command to insert x
+        X = {'x' : num}
+        mycursor.execute(seaNum, X)
+
+        found = mycursor.fetchone()
+
+        if found == None:
+            print ("SBtimeReturn: Not found")
+            return 0
+        else:
+            print("SBtimeReturn: Found " + str(found[0]))
+            return found[0]
+
+        print ("  Success: Number searched from Database")
+        # mycursor.close()
+        # key.close()
+
+    def FBtimeReturn(self, num):
+        key = self.connect()
+        mycursor = key.cursor()
+
+        print ("  Processing: searching for number (", num , ") in Database...")
+
+        seaNum = ("SELECT FBtime FROM test_table WHERE a = (%(x)s);") #sql command to insert x
+        X = {'x' : num}
+        mycursor.execute(seaNum, X)
+
+        found = mycursor.fetchone()
+
+        if found == None:
+            print ("FBtimeReturn: Not found")
+            return None
+        else:
+            print("FBtimeReturn: Found " + str(found[0]))
+            return found[0]
+
+        print ("  Success: Number searched from Database")
+        # mycursor.close()
+        # key.close()
+
+
     def printAll (self):
         #to print all prime values
         key = self.connect()
@@ -149,139 +196,4 @@ class Database(object):
         mycursor.close()
         key.close()
 
-    def last (self): # Get the last prime number inputted into the database
-                     # This will only work if we give each entry an order number
-                     # In this case, column num increase by 1 for each input
-        key = self.connect()
-        mycursor = key.cursor()
-
-        print ("  Processing: searching for last input in Database...")
-
-        seaNum = ("SELECT a FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
-        mycursor.execute(seaNum)
-
-        found = mycursor.fetchone()
-
-        print("Found " + str(found[0]))
-        return int(found[0])
-
-    def last2 (self): # Get the last number id inputted into the database
-                     # This will only work if we give each entry an order number
-                     # In this case, column num increase by 1 for each input
-        key = self.connect()
-        mycursor = key.cursor()
-
-        print ("  Processing: searching for last input in Database...")
-
-        seaNum = ("SELECT num FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
-        mycursor.execute(seaNum)
-
-        found = mycursor.fetchone()
-
-        print("Found " + str(found[0]))
-        return int(found[0])
-    
-    def last (self): # Get the last prime number inputted into the database
-                     # This will only work if we give each entry an order number
-                     # In this case, column num increase by 1 for each input
-        key = self.connect()
-        mycursor = key.cursor()
-
-        print ("  Processing: searching for last input in Database...")
-
-        seaNum = ("SELECT a FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
-        mycursor.execute(seaNum)
-
-        found = mycursor.fetchone()
-
-        print("Found " + str(found[0]))
-        return int(found[0])
-
-    def last2 (self): # Get the last number id inputted into the database
-                     # This will only work if we give each entry an order number
-                     # In this case, column num increase by 1 for each input
-        key = self.connect()
-        mycursor = key.cursor()
-
-        print ("  Processing: searching for last input in Database...")
-
-        seaNum = ("SELECT num FROM test_table ORDER BY num DESC LIMIT 1;") #sql command to insert x
-        mycursor.execute(seaNum)
-
-        found = mycursor.fetchone()
-
-        print("Found " + str(found[0]))
-        return int(found[0])
-
-    # def StorePrime (self, num):
-    #     key = self.connect()
-    #
-    #     mycursor = key.cursor()
-    #
-    #     print ("  Processing: Inserting prime number into Database...")
-    #     addNum = ("INSERT INTO test_table (a) VALUES (%(x)s)") #sql command to insert x
-    #     X = {'x' : num} # used a dic. incase we want to input multi. values
-    #     mycursor.execute(addNum, X)
-    #     print ("  Success: Number inserted into Database")
-    #
-    #     key.commit()
-    #     mycursor.close()
-    #     key.close()
-    #     return
-    #
-    #
-    # def StoreFBTime (self, fbtime):
-    #     key = self.connect()
-    #
-    #     mycursor = key.cursor()
-    #
-    #     print ("  Processing: Inserting FBtime into Database...")
-    #     addtime = ("INSERT INTO test_table (FBtime) VALUES (%(x)s)") #sql command to insert x
-    #     X = {'x' : fbtime} # used a dic. incase we want to input multi. values
-    #     mycursor.execute(addtime, X)
-    #     print ("  Success: FBtime inserted into Database")
-    #
-    #     key.commit()
-    #     mycursor.close()
-    #     key.close()
-    #
-    # def StoreSBTime (self, num):
-    #     key = self.connect()
-    #
-    #     mycursor = key.cursor()
-    #
-    #     print ("  Processing: Inserting SBtime into Database...")
-    #     addtime = ("INSERT INTO test_table (SBtime) VALUES (%(x)s)") #sql command to insert x
-    #     X = {'x' : num} # used a dic. incase we want to input multi. values
-    #     mycursor.execute(addtime, X)
-    #     print ("  Success: SBtime inserted into Database")
-    #
-    #     key.commit()
-    #     mycursor.close()
-    #     key.close()
-    #     return
-    #
-    # def appendFBtime2(self, prime, FBtime):
-    #     key = self.connect()
-    #     mycursor = key.cursor()
-    #     #self.Database(self.user, self.password , self.host, self.database)
-    #     #search = self.search(prime)
-    #
-    #     print ("  ~~~Processing: appending FBtime for ( " , prime , ") ...")
-    #
-    #     #if search == True:
-    #
-    #     append = """    UPDATE test_table
-    #                             SET FBtime = %s
-    #                             WHERE a = %s """
-    #
-    #     X = (FBtime,prime)
-    #     mycursor.execute(append, X)
-    #     print ("  ~~~Success: Appended FBtime for ( " , prime , ") ...")
-    #     return True
-    #         #else:
-    #             # print ("ERROR: The prime number isn't stored in the database... can't append")
-    #             # return False
-    #
-    #     mycursor.close()
-    #     key.close()
+#db.Database()
